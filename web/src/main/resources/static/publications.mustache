@@ -1,0 +1,17 @@
+<html lang="ru">
+<head>
+    <title>Publications</title>
+</head>
+<body>
+    {{#publications}}
+    <div>
+        <b>Id : </b>{{id}}
+        <b>Head : </b>{{head}}
+        <b>Body : </b>{{body}}
+    </div>
+    {{/publications}}
+    {{#pages}}
+     <a href="http://localhost:9090/likon/publications?page={{value}}">{{value}}</a>
+    {{/pages}}
+</body>
+</html>
