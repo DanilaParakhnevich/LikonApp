@@ -19,6 +19,7 @@ public class UserController {
     @GetMapping
     @ResponseStatus(OK)
     public List<UserClientModel> readAll() {
+        System.out.println(userService.readAll());
         return userService.readAll();
     }
 

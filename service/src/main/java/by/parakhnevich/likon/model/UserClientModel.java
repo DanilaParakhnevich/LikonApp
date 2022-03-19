@@ -1,7 +1,6 @@
 package by.parakhnevich.likon.model;
 
-import by.parakhnevich.likon.entity.RatingEntity;
-import by.parakhnevich.likon.entity.Role;
+import by.parakhnevich.likon.entity.RoleEntity;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -13,7 +12,8 @@ public class UserClientModel implements ClientModel {
     private String nickname;
     private String mail;
     private String password;
-    private Role role;
+    private RoleEntity role;
     private LocalDateTime createDate;
-    private List<RatingEntity> ratings;
+    private List<CommentRatingClientModel> commentRatings;
+    private List<PublicationRatingClientModel> publicationRatings;
 }

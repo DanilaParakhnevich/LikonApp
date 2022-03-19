@@ -1,12 +1,12 @@
 package by.parakhnevich.likon.impl;
 
 import by.parakhnevich.likon.UserService;
-import by.parakhnevich.likon.entity.Role;
 import by.parakhnevich.likon.entity.UserEntity;
 import by.parakhnevich.likon.exception.BadParameterException;
 import by.parakhnevich.likon.exception.UserNotFoundException;
 import by.parakhnevich.likon.mapper.UserModelMapper;
 import by.parakhnevich.likon.model.UserClientModel;
+import by.parakhnevich.likon.repository.RoleRepository;
 import by.parakhnevich.likon.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,16 +20,17 @@ public class UserServiceImpl implements UserService {
     private final String USER_NOT_FOUND = "user.not.found";
     private final String BAD_PARAM = "bad.param";
     UserRepository userRepository;
+    RoleRepository roleRepository;
     UserModelMapper userMapper;
 
     @Override
     public UserClientModel create(UserClientModel user) {
-        user.setRole(Role.USER);
+        user.setRole(roleRepository.findByName("USER"));
         user.setCreateDate(LocalDateTime.now());
         userRepository.save(userMapper.toEntity(user));
-        Optional<UserEntity> userEntity = userRepository.findByNickname(user.getNickname());
-        if (userEntity.isPresent()) {
-            return userMapper.toClientModel(userEntity.get());
+        UserEntity userEntity = userRepository.findByNickname(user.getNickname());
+        if (userEntity != null) {
+            return userMapper.toClientModel(userEntity);
         }
         throw new UserNotFoundException(USER_NOT_FOUND + "/nickname=" + user.getNickname());
     }
@@ -81,6 +82,10 @@ public class UserServiceImpl implements UserService {
         this.userMapper = userMapper;
     }
 
+    @Autowired
+    public void setRoleRepository(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;

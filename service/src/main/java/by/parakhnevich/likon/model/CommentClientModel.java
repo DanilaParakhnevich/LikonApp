@@ -1,15 +1,16 @@
 package by.parakhnevich.likon.model;
 
+import by.parakhnevich.likon.entity.CommentRatingEntity;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class PublicationClientModel implements ClientModel {
+public class CommentClientModel implements ClientModel {
     private long id;
-    private String head;
     private String body;
-    private List<PublicationRatingClientModel> ratings;
+    private List<CommentRatingEntity> ratings;
+    private UserClientModel user;
     private LocalDateTime createDate;
 }
